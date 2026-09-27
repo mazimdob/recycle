@@ -32,7 +32,7 @@ class recyclable(pygame.sprite.Sprite):
     def __init__(self,img):
         super().__init__()
         self.image=pygame.image.load(img)
-        self.image=pygame.transform.scale(self.image(30,30))
+        self.image=pygame.transform.scale(self.image,(30,30))
         self.rect=self.image.get_rect()
 allsprites=pygame.sprite.Group()
 item_list=pygame.sprite.Group()
@@ -106,3 +106,20 @@ while playing:
         if keys [pygame.K_LEFT]:
             if bin.rect.x>0:
                 bin.rect.x-=5
+        item_hit_list=pygame.sprite.spritecollide(bin,item_list,True)
+
+        for item in item_hit_list:
+            score +=1
+            text=myfont.render("score="+str(score),True,BLACK)
+
+        plastic_hit_list=pygame.sprite.spritecollide(bin, plastic_list,True)
+
+        for plastic in plastic_hit_list:
+            score -=5
+            text=myfont.render("score="+str(score),True,BLACK)
+    screen.blit(text,(20,50))
+
+    allsprites.draw(screen)
+    pygame.display.update()
+
+pygame.quit()
